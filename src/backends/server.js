@@ -1,7 +1,8 @@
 import express from 'express'
 import cors from 'cors';
+import bcrypt from 'bcrypt';
 //import bodyParser from 'body-parser'
-import { initDb, getArticles,getArticleById, createArticle, updateArticle, updatePv } from './dbService.js'
+import { initDb, getArticles,getArticleById, createArticle, updateArticle, updatePv ,getUserByUsername} from './dbService.js'
 
 
 const app = express()
@@ -71,6 +72,30 @@ app.post('/vue-admin-template/article/create', async (req, res) => {
         res.status(201).json({ data: result });
     } catch (error) {
         res.status(500).json({code: 50001, error: error.message });
+    }
+});
+
+// 登录接口
+app.post('/vue-admin-template/user/login', async (req, res) => {
+    const { username, password } = req.body;
+
+    try {
+        // 获取用户信息
+        const user = await getUserByUsername(username);
+        if (!user) {
+            return res.status(401).json({ code: 401, message: '用户名或密码错误' });
+        }
+
+        // 验证密码（假设用户密码存储是使用 bcrypt 加密的）
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+            return res.status(401).json({ code: 401, message: '用户名或密码错误' });
+        }
+
+        // 返回登录成功的响应
+        res.status(200).json({ code: 20000, message: '登录成功', user: { id: user.id, username: user.username } });
+    } catch (error) {
+        res.status(500).json({ code: 50001, message: '服务器错误', error: error.message });
     }
 });
 

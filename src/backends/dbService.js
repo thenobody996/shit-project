@@ -1,5 +1,6 @@
 import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
+import bcrypt from 'bcrypt';
 
 // 打开数据库连接
 let db;
@@ -23,6 +24,13 @@ async function initDb() {
             status TEXT DEFAULT 'draft',
             type TEXT,
             remark TEXT
+        )
+    `);
+    await db.exec(`CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT UNIQUE NOT NULL,
+        password TEXT NOT NULL,
+        privilege INTEGER DEFAULT 0
         )
     `);
 }
@@ -102,4 +110,22 @@ async function deleteArticle(id) {
     return { id };
 }
 
-export { initDb, getArticles, getArticleById, createArticle, updateArticle, deleteArticle ,updatePv};
+// 添加用户认证的查询方法
+async function getUserByUsername(username) {
+    try {
+        // 假设数据库中有用户表 `users`，字段包括 `username` 和 `password`
+        const user = await db.get(`SELECT * FROM users WHERE username = ?`, username);
+        return user;
+    } catch (error) {
+        console.error('Error fetching user:', error);
+        throw error;
+    }
+}
+
+// 注册用户时加密密码
+async function createUser(username, plainPassword) {
+    const hashedPassword = await bcrypt.hash(plainPassword, 10);
+    await db.run(`INSERT INTO users (username, password) VALUES (?, ?)`, username, hashedPassword);
+}
+
+export { initDb, getArticles, getArticleById, createArticle, updateArticle, deleteArticle ,updatePv,createUser,getUserByUsername};
