@@ -30,7 +30,8 @@ async function initDb() {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         username TEXT UNIQUE NOT NULL,
         password TEXT NOT NULL,
-        privilege INTEGER DEFAULT 0
+        privilege INTEGER DEFAULT 0,
+        token TEXT NOT NULL
         )
     `);
 }
@@ -127,5 +128,31 @@ async function createUser(username, plainPassword) {
     const hashedPassword = await bcrypt.hash(plainPassword, 10);
     await db.run(`INSERT INTO users (username, password) VALUES (?, ?)`, username, hashedPassword);
 }
-
-export { initDb, getArticles, getArticleById, createArticle, updateArticle, deleteArticle ,updatePv,createUser,getUserByUsername};
+// Function to get user token based on username
+function getUserToken(username) {
+    return new Promise((resolve, reject) => {
+      db.get('SELECT token FROM users WHERE username = ?', [username], (err, row) => {
+        if (err) {
+            console.log(err);
+          reject(err);
+        } else {
+            console.log(row.token);
+          resolve(row ? row.token : null);
+        }
+      });
+    });
+  }
+  
+  // Function to get user information based on token
+  function getUserInfoByToken(token) {
+    return new Promise((resolve, reject) => {
+      db.get('SELECT roles, introduction, avatar, name FROM users WHERE token = ?', [token], (err, row) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(row);
+        }
+      });
+    });
+  }
+export { initDb, getArticles, getArticleById, createArticle, updateArticle, deleteArticle ,updatePv,createUser,getUserByUsername,getUserInfoByToken,getUserToken};

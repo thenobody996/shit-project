@@ -1,4 +1,4 @@
-import request from '@/utils/localrequest'
+import request from '@/utils/request'
 
 export function getList(params) {
   return request({
