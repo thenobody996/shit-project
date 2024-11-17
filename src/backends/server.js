@@ -137,10 +137,6 @@ app.get('/vue-admin-template/user/info', async (req, res) => {
       data: 'success'
     });
   });
-
-  app.get('/vue-admin-template/table/list',async(req,res) => {
-    
-  })
 // 启动服务器
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {

@@ -1,9 +1,9 @@
 <template>
   <div>
     <div style="margin-bottom:15px;">
-      你的权限为: {{ roles }}
+      Your roles: {{ roles }}
     </div>
-    更改权限
+    Switch roles:
     <el-radio-group v-model="switchRoles">
       <el-radio-button label="editor" />
       <el-radio-button label="admin" />
