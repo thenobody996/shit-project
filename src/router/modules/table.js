@@ -9,7 +9,8 @@ const tableRouter = {
   name: 'Table',
   meta: {
     title: '管理',
-    icon: 'table'
+    icon: 'table',
+    roles: ['admin']
   },
   children: [
     // {
@@ -34,7 +35,19 @@ const tableRouter = {
       path: 'complex-table',
       component: () => import('@/views/table/complex-table'),
       name: 'ComplexTable',
-      meta: { title: '会议管理' }
+      meta: {
+        title: '会议室管理',
+        roles: ['admin']
+      }
+    },
+    {
+      path: 'person',
+      component: () => import('@/views/table/person.vue'),
+      name: 'PersonTable',
+      meta: {
+        title: '人员管理',
+        roles: ['admin']
+      }
     }
   ]
 }

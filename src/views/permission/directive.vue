@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <switch-roles @change="handleRolesChange" />
-    <div :key="key" style="margin-top:30px;">
+    <!-- <div :key="key" style="margin-top:30px;">
       <div>
         <span v-permission="['admin']" class="permission-alert">
           Only
@@ -62,7 +62,7 @@
           </el-tag>
         </el-tab-pane>
       </el-tabs>
-    </div>
+    </div> -->
   </div>
 </template>
 

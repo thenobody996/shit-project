@@ -8,7 +8,7 @@
       <github-corner style="position: absolute; top: 0px; border: 0; right: 0;" />
       <div class="info-container">
         <span class="display_name">{{ name }}</span>
-        <span style="font-size:20px;padding-top:20px;display:inline-block;">预约端</span>
+        <span style="font-size:20px;padding-top:20px;display:inline-block;">管理端</span>
       </div>
     </div>
     <div>

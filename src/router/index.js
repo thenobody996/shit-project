@@ -7,10 +7,10 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 /* Router Modules */
-import componentsRouter from './modules/components'
-import chartsRouter from './modules/charts'
+// import componentsRouter from './modules/components'
+// import chartsRouter from './modules/charts'
 import tableRouter from './modules/table'
-import nestedRouter from './modules/nested'
+// import nestedRouter from './modules/nested'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -82,7 +82,7 @@ export const constantRoutes = [
         meta: { title: '主页', icon: 'dashboard', affix: true }
       }
     ]
-  },
+  }
   // {
   //   path: '/documentation',
   //   component: Layout,
@@ -129,47 +129,47 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
-  // {
-  //   path: '/permission',
-  //   component: Layout,
-  //   redirect: '/permission/page',
-  //   alwaysShow: true, // will always show the root menu
-  //   name: 'Permission',
-  //   meta: {
-  //     title: 'Permission',
-  //     icon: 'lock',
-  //     roles: ['admin', 'editor'] // you can set roles in root nav
-  //   },
-  //   children: [
-  //     {
-  //       path: 'page',
-  //       component: () => import('@/views/permission/page'),
-  //       name: 'PagePermission',
-  //       meta: {
-  //         title: 'Page Permission',
-  //         roles: ['admin'] // or you can only set roles in sub nav
-  //       }
-  //     },
-  //     {
-  //       path: 'directive',
-  //       component: () => import('@/views/permission/directive'),
-  //       name: 'DirectivePermission',
-  //       meta: {
-  //         title: 'Directive Permission'
-  //         // if do not set roles, means: this page does not require permission
-  //       }
-  //     },
-  //     {
-  //       path: 'role',
-  //       component: () => import('@/views/permission/role'),
-  //       name: 'RolePermission',
-  //       meta: {
-  //         title: 'Role Permission',
-  //         roles: ['admin']
-  //       }
-  //     }
-  //   ]
-  // },
+  {
+    path: '/permission',
+    component: Layout,
+    redirect: '/permission/page',
+    alwaysShow: true, // will always show the root menu
+    name: 'Permission',
+    meta: {
+      title: '权限',
+      icon: 'lock',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [
+      // {
+      //   path: 'page',
+      //   component: () => import('@/views/permission/page'),
+      //   name: 'PagePermission',
+      //   meta: {
+      //     title: 'Page Permission',
+      //     roles: ['admin'] // or you can only set roles in sub nav
+      //   }
+      // },
+      {
+        path: 'directive',
+        component: () => import('@/views/permission/directive'),
+        name: 'DirectivePermission',
+        meta: {
+          title: '更改权限'
+          // if do not set roles, means: this page does not require permission
+        }
+      }
+      // {
+      //   path: 'role',
+      //   component: () => import('@/views/permission/role'),
+      //   name: 'RolePermission',
+      //   meta: {
+      //     title: 'Role Permission',
+      //     roles: ['admin']
+      //   }
+      // }
+    ]
+  },
 
   // {
   //   path: '/icon',
@@ -190,37 +190,48 @@ export const asyncRoutes = [
   // nestedRouter,
   tableRouter,
 
-  // {
-  //   path: '/example',
-  //   component: Layout,
-  //   redirect: '/example/list',
-  //   name: 'Example',
-  //   meta: {
-  //     title: 'Example',
-  //     icon: 'el-icon-s-help'
-  //   },
-  //   children: [
-  //     {
-  //       path: 'create',
-  //       component: () => import('@/views/example/create'),
-  //       name: 'CreateArticle',
-  //       meta: { title: 'Create Article', icon: 'edit' }
-  //     },
-  //     {
-  //       path: 'edit/:id(\\d+)',
-  //       component: () => import('@/views/example/edit'),
-  //       name: 'EditArticle',
-  //       meta: { title: 'Edit Article', noCache: true, activeMenu: '/example/list' },
-  //       hidden: true
-  //     },
-  //     {
-  //       path: 'list',
-  //       component: () => import('@/views/example/list'),
-  //       name: 'ArticleList',
-  //       meta: { title: 'Article List', icon: 'list' }
-  //     }
-  //   ]
-  // },
+  {
+    path: '/example',
+    component: Layout,
+    redirect: '/example/create',
+    name: 'Example',
+    meta: {
+      title: '预约',
+      icon: 'el-icon-s-help',
+      roles: ['editor']
+    },
+    children: [
+      {
+        path: 'create',
+        component: () => import('@/views/example/index.vue'),
+        name: 'Create Meeting',
+        meta: {
+          title: '创建会议',
+          icon: 'edit',
+          roles: ['editor']
+        }
+      }
+      // // {
+      // //   path: 'create',
+      // //   component: () => import('@/views/example/create'),
+      // //   name: 'CreateArticle',
+      // //   meta: { title: 'Create Article', icon: 'edit' }
+      // // },
+      // // {
+      // //   path: 'edit/:id(\\d+)',
+      // //   component: () => import('@/views/example/edit'),
+      // //   name: 'EditArticle',
+      // //   meta: { title: 'Edit Article', noCache: true, activeMenu: '/example/list' },
+      // //   hidden: true
+      // // },
+      // // {
+      // //   path: 'list',
+      // //   component: () => import('@/views/example/list'),
+      // //   name: 'ArticleList',
+      // //   meta: { title: 'Article List', icon: 'list' }
+      // // }
+    ]
+  },
 
   // {
   //   path: '/tab',

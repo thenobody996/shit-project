@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    <switch-roles @change="handleRolesChange" />
     <div class="filter-container">
       <el-input v-model="listQuery.title" placeholder="名称" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-select v-model="listQuery.sort" style="width: 140px" class="filter-item" @change="handleFilter">
@@ -36,8 +37,9 @@
       </el-table-column>
       <el-table-column label="使用时间" width="200px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
-          <span>{{ row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ row.timestampB | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          -
+          <span>{{ row.timestampE | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="会议室名称" min-width="150px" align="center">
@@ -86,6 +88,9 @@
         </el-form-item>
         <el-form-item label="申请者" prop="author">
           <el-input v-model="temp.author" />
+        </el-form-item>
+        <el-form-item label="人数上限" prop="person">
+          <el-input v-model="temp.pageviews" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -139,7 +144,8 @@ export default {
         timestampB: new Date(),
         timestampE: new Date(),
         title: '',
-        author: ''
+        author: '',
+        pageviews: ''
       },
       dialogFormVisible: false,
       textMap: {
@@ -149,7 +155,7 @@ export default {
       dialogPvVisible: false,
       pvData: [],
       rules: {
-        timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
+        timestamp: [{ type: 'date', required: false, message: 'timestamp is required', trigger: 'change' }],
         title: [{ required: true, message: 'title is required', trigger: 'blur' }]
       },
       downloadLoading: false
@@ -302,6 +308,9 @@ export default {
     getSortClass: function(key) {
       const sort = this.listQuery.sort
       return sort === `+${key}` ? 'ascending' : 'descending'
+    },
+    handleRolesChange() {
+      this.$router.push({ path: '/table/index?' + +new Date() })
     }
   }
 }
